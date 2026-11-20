@@ -1,58 +1,294 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<style>
-body {
-    background: lavender;
-    font-family: Verdana;
-}  
-#content {
-    background: lightgreen;
-    min-width: 200px;
-    max-width: 500px;
-    padding: 50px;
-    margin: auto;
-    margin-top: -50px;
-    line-height: 150%;
-}
-h1 {
-    letter-spacing: 2px;
-    font-size: 16px;
-    text-align: center;
-}
-h2 {
-    font-size: 14px;
-    text-align: center;
-}
-h3 {
-    font-size: 12px;
-}
-img {
-    width: 250px;
-    height: auto;
-    display: block;
-    margin: 15px auto;
-}
-</style>
-</head>    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Meet Stef — Bob Jones University student, Bruins volleyball captain, and future volleyball coach.">
+  <meta name="theme-color" content="#173b70">
+  <title>Stef | Personal Website</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f4f7fc;
+      --surface: #ffffff;
+      --surface-soft: #eaf1fb;
+      --text: #17263d;
+      --muted: #5d6d83;
+      --blue: #24569a;
+      --blue-deep: #173b70;
+      --accent: #79a9e8;
+      --border: #dce5f1;
+      --shadow: 0 18px 48px rgba(25, 55, 95, .10);
+    }
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --page: #0c1524;
+      --surface: #142238;
+      --surface-soft: #1b304d;
+      --text: #edf4ff;
+      --muted: #b3c2d8;
+      --blue: #9bc3ff;
+      --blue-deep: #c2d9ff;
+      --accent: #6d9fdf;
+      --border: #2b405d;
+      --shadow: 0 18px 48px rgba(0, 0, 0, .25);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      line-height: 1.65;
+      transition: background .25s ease, color .25s ease;
+    }
+    a { color: inherit; }
+    .site-header {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+    .nav {
+      max-width: 1100px; margin: auto; padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    }
+    .brand { font-weight: 800; letter-spacing: .03em; color: var(--blue); text-decoration: none; font-size: 1.15rem; }
+    .nav-right { display: flex; align-items: center; gap: 22px; }
+    .nav-links { display: flex; gap: 22px; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: .94rem; }
+    .nav-links a:hover, .text-link:hover { color: var(--blue); }
+    .theme-toggle {
+      border: 1px solid var(--border); background: var(--surface-soft); color: var(--text);
+      border-radius: 999px; padding: 9px 14px; font: inherit; font-size: .88rem;
+      font-weight: 700; cursor: pointer;
+    }
+    .theme-toggle:hover { border-color: var(--accent); }
+    main { max-width: 1100px; margin: auto; padding: 52px 24px 72px; }
+    .hero {
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px;
+      align-items: center; min-height: 490px;
+    }
+    .eyebrow {
+      color: var(--blue); text-transform: uppercase; letter-spacing: .16em;
+      font-size: .78rem; font-weight: 800; margin: 0 0 12px;
+    }
+    h1 { font-size: clamp(2.7rem, 6vw, 4.7rem); line-height: 1.05; letter-spacing: -.045em; margin: 0 0 20px; }
+    h1 span { color: var(--blue); }
+    .intro { color: var(--muted); font-size: 1.12rem; max-width: 590px; margin: 0 0 26px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .button {
+      display: inline-block; padding: 12px 19px; border-radius: 10px;
+      background: var(--blue-deep); color: #fff; text-decoration: none; font-weight: 700;
+      border: 1px solid var(--blue-deep); transition: transform .2s, opacity .2s;
+    }
+    .button:hover { transform: translateY(-2px); opacity: .92; }
+    .button.secondary { background: transparent; color: var(--blue); border-color: var(--border); }
+    .photo-wrap { position: relative; max-width: 410px; justify-self: end; width: 100%; }
+    .photo-wrap::before {
+      content: ""; position: absolute; inset: 18px -16px -16px 18px;
+      border-radius: 28px; background: var(--surface-soft); border: 1px solid var(--border);
+    }
+    .profile-photo {
+      position: relative; display: block; width: 100%; aspect-ratio: 4 / 5;
+      object-fit: cover; object-position: center; border-radius: 26px;
+      border: 7px solid var(--surface); box-shadow: var(--shadow);
+      background: var(--surface-soft);
+    }
+    .photo-note { position: relative; margin: 12px 0 0; color: var(--muted); font-size: .8rem; text-align: right; }
+    section { scroll-margin-top: 90px; margin-top: 62px; }
+    .section-heading { margin-bottom: 22px; }
+    .section-heading h2 { font-size: clamp(1.8rem, 3vw, 2.45rem); line-height: 1.15; margin: 0 0 8px; letter-spacing: -.025em; }
+    .section-heading p { color: var(--muted); margin: 0; max-width: 680px; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+      padding: 23px; box-shadow: var(--shadow);
+    }
+    .card .icon { font-size: 1.55rem; margin-bottom: 10px; }
+    .card h3 { margin: 0 0 8px; font-size: 1.08rem; }
+    .card p { color: var(--muted); margin: 0; font-size: .96rem; }
+    .feature {
+      display: grid; grid-template-columns: .8fr 1.2fr; gap: 28px;
+      align-items: center; padding: 30px; background: var(--surface-soft);
+      border: 1px solid var(--border); border-radius: 22px;
+    }
+    .volleyball-photo {
+      display: block; width: 100%; height: 270px; object-fit: cover;
+      object-position: center 38%; border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+    .feature h2 { margin: 0 0 10px; font-size: 1.8rem; line-height: 1.2; }
+    .feature p { color: var(--muted); margin: 0 0 14px; }
+    .text-link { color: var(--blue); font-weight: 800; text-underline-offset: 4px; }
+    .goal {
+      background: var(--surface); border: 1px solid var(--border); border-left: 5px solid var(--accent);
+      border-radius: 16px; padding: 25px 28px; box-shadow: var(--shadow);
+    }
+    .goal p { color: var(--muted); margin: 0; font-size: 1.05rem; }
+    footer { border-top: 1px solid var(--border); padding: 24px; color: var(--muted); text-align: center; font-size: .9rem; }
+    @media (max-width: 760px) {
+      .nav { padding: 12px 18px; }
+      .nav-right { gap: 12px; }
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: .84rem; }
+      main { padding: 38px 20px 56px; }
+      .hero { grid-template-columns: 1fr; gap: 34px; min-height: 0; }
+      .photo-wrap { justify-self: center; max-width: 340px; }
+      .cards { grid-template-columns: 1fr; }
+      .feature { grid-template-columns: 1fr; padding: 22px; }
+      .feature-mark { min-height: 130px; }
+    }
+    @media (max-width: 430px) {
+      .nav { align-items: flex-start; flex-direction: column; }
+      .nav-right { width: 100%; justify-content: space-between; }
+      .nav-links { gap: 15px; }
+      .theme-toggle { padding: 8px 11px; }
+      .hero-actions .button { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
 <body>
-    <div id="content">
-        <h1>Stefanie Burke</h1>
-        <h2>Junior in Greenville, South Carolina</h2>
-        
-         <p>I am a junior at Bob Jones University studying business administration. I play volleyball for the Bruins and I am a coach for Carolina One volleyball club.</p>
-         <p>
-            I go to Hampton Park Baptist Church. My favorite website is  
-            <a href="https://www.bjubruins.com/">here</a>, and you can email me  
-            <a href="mailto:sburk835@bju.edu">here</a>.
-         </p> 
-         <p>
-            I enjoy playing sports and anything outdoors.
-         </p>
-        <h3>EDUCATION</h3>
-        Business Administration<br />
-        Bob Jones University<br />
-        Co-lab image:
-        <img src="https://www.bju.edu/academics/programs/business-administration/images/20240909business-wing-de10.jpg" />
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#home">STEF.</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#interests">Interests</a>
+          <a href="#goals">Goals</a>
+        </div>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch color theme">☾ Dark mode</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero" id="home">
+      <div>
+        <p class="eyebrow">A little about me</p>
+        <h1>Hi, I'm <span>Stef.</span></h1>
+        <p class="intro">
+          I'm from Greenville, South Carolina, and I'm a junior at Bob Jones University
+          studying Business Administration. I love being active, spending time with the
+          people closest to me, and finding creative ways to make the most of every day.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#about">Get to know me</a>
+          <a class="button secondary" href="https://bjubruins.com/" target="_blank" rel="noopener noreferrer">Meet the BJU Bruins ↗</a>
+        </div>
+      </div>
+      <div class="photo-wrap">
+        <img class="profile-photo" src="assets/stef-portrait.jpg" alt="Stef smiling in front of the ocean">
+        <p class="photo-note">Greenville, South Carolina</p>
+      </div>
     </div>
+
+    <section id="about">
+      <div class="section-heading">
+        <p class="eyebrow">Who I am</p>
+        <h2>Faith, friends, and making memories.</h2>
+        <p>Some of the things that matter most to me are the people in my life, the opportunities I have, and the chance to encourage others.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="icon" aria-hidden="true">✦</div>
+          <h3>My faith</h3>
+          <p>I'm a Christian, and I strive to show the love of Christ through the way I live and treat the people around me.</p>
+        </article>
+        <article class="card">
+          <div class="icon" aria-hidden="true">🎓</div>
+          <h3>My education</h3>
+          <p>I'm a junior at Bob Jones University, where I'm majoring in Business Administration and continuing to learn and grow.</p>
+        </article>
+        <article class="card">
+          <div class="icon" aria-hidden="true">😊</div>
+          <h3>My personality</h3>
+          <p>People often describe me as kind, athletic, and funny. I enjoy bringing energy, encouragement, and a little humor wherever I go.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="interests">
+      <div class="section-heading">
+        <p class="eyebrow">Outside the classroom</p>
+        <h2>A few of my favorite things</h2>
+        <p>I enjoy trying different activities, getting outside, being creative, and spending quality time with friends and family.</p>
+      </div>
+      <div class="feature">
+        <img class="volleyball-photo" src="assets/volleyball.jpg" alt="Stef setting a volleyball during a Bruins match">
+        <div>
+          <h2>Volleyball is a big part of my life.</h2>
+          <p>I'm a captain for the Bruins volleyball team at BJU. I love playing sports and being part of a team, and volleyball has helped shape my love for encouraging others and working toward a common goal.</p>
+          <a class="text-link" href="https://bjubruins.com/" target="_blank" rel="noopener noreferrer">Explore BJU Bruins athletics</a>
+        </div>
+      </div>
+      <div class="cards" style="margin-top:18px">
+        <article class="card"><div class="icon" aria-hidden="true">🥾</div><h3>Getting outdoors</h3><p>Hiking, swimming, and staying active are some of my favorite ways to spend time.</p></article>
+        <article class="card"><div class="icon" aria-hidden="true">🎨</div><h3>Getting creative</h3><p>I enjoy doing nails and all kinds of crafts. I love having a creative project to work on.</p></article>
+        <article class="card"><div class="icon" aria-hidden="true">🍿</div><h3>Time with others</h3><p>Whether it's watching movies or simply hanging out, I love making memories with friends and family.</p></article>
+      </div>
+    </section>
+
+    <section id="goals">
+      <div class="section-heading">
+        <p class="eyebrow">Looking ahead</p>
+        <h2>My goal for the future</h2>
+      </div>
+      <div class="goal">
+        <p>In the future, I hope to become a volleyball coach and work with young kids who want to grow in their sport. I want to help them build their skills, enjoy the game, and develop the same love for volleyball that I have. More than anything, I hope to be someone who encourages them both on and off the court.</p>
+      </div>
+    </section>
+
+    <section id="links">
+      <div class="section-heading">
+        <p class="eyebrow">Find out more</p>
+        <h2>Places connected to my story</h2>
+        <p>Here are two links to learn more about my university and its athletic program.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h3>Bob Jones University</h3>
+          <p>Learn more about the university where I'm studying Business Administration.</p>
+          <p style="margin-top:14px"><a class="text-link" href="https://www.bju.edu/" target="_blank" rel="noopener noreferrer">Visit BJU.edu ↗</a></p>
+        </article>
+        <article class="card">
+          <h3>BJU Bruins Athletics</h3>
+          <p>Follow Bruins athletics and learn more about the teams and competitions.</p>
+          <p style="margin-top:14px"><a class="text-link" href="https://bjubruins.com/" target="_blank" rel="noopener noreferrer">Visit BJUBruins.com ↗</a></p>
+        </article>
+        <article class="card">
+          <h3>Thanks for visiting!</h3>
+          <p>I'm glad you stopped by to learn a little about me. I hope you have a great day!</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Made with care by Stef · Greenville, South Carolina</p>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById("themeToggle");
+    const savedTheme = localStorage.getItem("stef-theme");
+    if (savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+
+    function updateToggle() {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      toggle.textContent = dark ? "☀ Light mode" : "☾ Dark mode";
+      toggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    }
+    updateToggle();
+
+    toggle.addEventListener("click", () => {
+      const dark = document.documentElement.getAttribute("data-theme") !== "dark";
+      document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+      localStorage.setItem("stef-theme", dark ? "dark" : "light");
+      updateToggle();
+    });
+  </script>
 </body>
 </html>
